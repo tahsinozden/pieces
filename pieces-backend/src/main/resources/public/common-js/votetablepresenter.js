@@ -27,12 +27,10 @@ app.controller('voteCtrl', ['$scope', '$http', '$q','$cookies', '$cookieStore', 
 	$scope.selectedTableID = undefined;
 	$scope.currentIPaddr = undefined;
 	
+	$scope.selectedTableID = $("#tableID").html();
+	console.log($scope.selectedTableID);
+	
 	$scope.submit = function(){
-//		var elm = angular.element(document.getElementById("tableName"));
-//		console.log(elm.html());
-		$scope.selectedTableID = $("#tableID").html();
-		console.log($scope.selectedTableID);
-		
 		// get checked checkboxes
 		var allElems = $( "input:checkbox:checked" );
 		if (allElems.length == 0){
@@ -90,6 +88,24 @@ app.controller('voteCtrl', ['$scope', '$http', '$q','$cookies', '$cookieStore', 
 
 
 	};
+	
+	$scope.deleteTable = function(tableID, authKey){
+		if (tableID == undefined || authKey == undefined){
+			alert('check data!');
+			return;
+		}
+		
+		var promise = voteService.deleteVoteTable(tableID, authKey);
+		promise.then(
+				function(success){
+					alert("table deleted successfully!");
+				},
+				function(error){
+					alert(error.message);
+					console.log("error occured!");
+				}
+		);
+	};
 }])
 .service('voteService', ['$http', '$q', function($http, $q){
 	return {
@@ -122,6 +138,30 @@ app.controller('voteCtrl', ['$scope', '$http', '$q','$cookies', '$cookieStore', 
 	   getCurrentIPInfo: function(){
 		   var defer = $q.defer();
 		   $http.get('http://ipinfo.io/?callback')
+		   	.then(
+		   			function(success){
+		   				defer.resolve(success.data);
+		   				console.log(success.data);
+		   			},
+		   			function(error){
+		   				defer.reject(error.data);
+		   				console.log("error!");
+		   				console.log(error.data);
+		   			}
+		   		  );
+		   return defer.promise;
+	   },
+	   deleteVoteTable: function(tableID, authKey){
+		   var defer = $q.defer();
+		    $http(
+					{
+						url: '/vote-tables/' + tableID, 
+						method: 'DELETE',
+						data: {'tableID': tableID, 'authKey': authKey},
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+					})				   
 		   	.then(
 		   			function(success){
 		   				defer.resolve(success.data);

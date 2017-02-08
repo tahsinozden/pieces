@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" ng-app="votePresenterApp" ng-cloak>
+<html xmlns:th="http://www.thymeleaf.org" ng-app="votePresenterApp"
+	ng-cloak>
 <link rel="stylesheet" href="../common-css/bootstrap.min.css" />
 
 <head>
@@ -10,24 +11,24 @@
 
 	<!-- <form  th:action="@{'/vote-tables/' + ${voteTableForm.getTable().getTableID()} + '/43'}"  method="post"> -->
 	<!-- <form  th:action="@{/vote-tables/__${voteTableForm.getTable().getTableID()}__/43}"  method="post"> -->
-	<div ng-controller="voteCtrl">
+	<div class="breadcrumb" ng-controller="voteCtrl">
 		<h2 th:inline="text">
 			<small id="tableName"
 				th:text="${voteTableForm.getTable().getVoteTableName()}"></small> <small
 				id="tableID" th:text="${voteTableForm.getTable().getTableID()}"
 				style="display: none"></small>
 		</h2>
-		<div class="row" th:each="item : ${voteTableForm.getTableItems()}">
+		<div th:each="item : ${voteTableForm.getTableItems()}">
 			<div class="col-lg-6">
 				<div class="input-group">
 					<span class="input-group-addon"> <input type="checkbox"
 						aria-label="...">
-					</span> <label class="form-control" th:text="${item.getItemID()}" style="display: none"></label>
-<!-- 					<label class="form-control" th:text="${item.getItemName()}"></label>  -->
-					<li class="list-group-item" th:inline="text">
-						<span class="badge" th:text="${item.getItemScore()}">0</span> 
-						<small th:text="${item.getItemName()}" ></small>
-					</li>
+					</span> <label class="form-control" th:text="${item.getItemID()}"
+						style="display: none"></label>
+					<!-- 					<label class="form-control" th:text="${item.getItemName()}"></label>  -->
+					<li class="list-group-item" th:inline="text"><span
+						class="badge" th:text="${item.getItemScore()}">0</span> <small
+						th:text="${item.getItemName()}"></small></li>
 				</div>
 				<!-- /input-group -->
 			</div>
@@ -36,8 +37,28 @@
 		<!-- /.row -->
 
 		<input type="submit" value="Submit" ng-click="submit()" />
+
+		<div>
+			<br> <br>
+			<div class="col-lg-6">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="AuthKey here!"
+						ng-model="authKey"> <span class="input-group-btn">
+						<button class="btn btn-default" type="button"
+							ng-click="deleteTable(selectedTableID, authKey)">Delete
+							VoteTable!</button>
+					</span>
+				</div>
+				<!-- /input-group -->
+			</div>
+			<!-- /.col-lg-6 -->
+		</div>
+		<!-- /.row -->
+
 	</div>
 	<!-- </form> -->
+
+
 
 
 
