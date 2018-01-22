@@ -12,10 +12,12 @@ The application will be run under the following address `http://localhost:9000`.
 
 ### Back-End
 `pieces-backend` folder can be imported into an Eclipse IDE as a maven project. Then with the following running configuration, the application can be run. `spring-boot:run -e -X`.
-The application will be run on the following address `http://localhost:8080`
+The application will be run on the following address `http://localhost:8080` <br>
+In order to vote, `http://localhost:8080` url should be used i.e. `http://localhost:8080/all-votes/2`
 
 #### Note
 The vote table links provided by the application just after creating of a vote table will be available under the address `http://localhost:8080/all-votes/<table_id>`
 
-
+![img](https://github.com/tahsinozden/pieces/blob/master/pieces_create_table.png)
+![img](https://github.com/tahsinozden/pieces/blob/master/pieces_voting_page.png)
 
